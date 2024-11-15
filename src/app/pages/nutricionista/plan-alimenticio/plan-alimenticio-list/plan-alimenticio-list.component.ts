@@ -78,6 +78,20 @@ export class PlanAlimenticioListComponent {
   anadirComida(planId: number): void {
     this.router.navigate([`/nutricionista/plan-alimenticio/comida/${planId}/agregar`]);
   }
+
+  calcularCaloriasTotales(planId: number): number {
+    let totalCalorias = 0;
+    this.planAlimenticioService.getPlanAlimenticio(planId).subscribe({
+      next: (comidas) => {
+        totalCalorias = comidas.reduce((sum, comida) => sum + comida.caloriasTotales, 0);
+      },
+      error: (error) => {
+        console.error('Error calculating total calories', error);
+        this.showSnackBar('Error al calcular las calorías totales');
+      }
+    });
+    return totalCalorias;
+  }
   
 
   deletePlanAlimenticio(planId: number): void {

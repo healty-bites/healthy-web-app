@@ -7,6 +7,7 @@ import { PlanAlimenticioFormCreateComponent } from './plan-alimenticio/plan-alim
 import { PlanAlimenticioFormEditComponent } from './plan-alimenticio/plan-alimenticio-form-edit/plan-alimenticio-form-edit.component';
 import { ComidaListComponent } from './comida/comida-list/comida-list.component';
 import { ComidaAnadirComponent } from './comida/comida-anadir/comida-anadir.component';
+import { ComidaEditComponent } from './comida/comida-edit/comida-edit.component';
 
 export const nutricionistaRoutes: Routes = [
     {
@@ -17,6 +18,7 @@ export const nutricionistaRoutes: Routes = [
             {path: 'plan-alimenticio/create', component: PlanAlimenticioFormCreateComponent},
             {path: 'plan-alimenticio/edit/:id', component: PlanAlimenticioFormEditComponent},
             {path: 'plan-alimenticio/comida/:planId/agregar', component: ComidaAnadirComponent},
+            {path: 'plan-alimenticio/comida/:planId/editar/:comidaId', component: ComidaEditComponent},
             
             {path: 'comida/list', component: ComidaListComponent},
             {path: 'contenido', component: ContenidoComponent},

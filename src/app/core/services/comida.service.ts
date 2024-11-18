@@ -19,7 +19,23 @@ export class ComidaService {
     return this.http.post<ComidaResponse>(`${this.baseURL}/${planId}/comidas`, comida);
   }
 
-  getAllComida(planId: number): Observable<ComidaResponse[]> {
+  getAllComidaByPlan(planId: number): Observable<ComidaResponse[]> {
     return this.http.get<ComidaResponse[]>(`${this.baseURL}/${planId}/comidas`);
+  }
+
+  getAllByNutricionistaId(nutricionistaId: number): Observable<ComidaResponse[]> {
+    return this.http.get<ComidaResponse[]>(`${this.baseURL}/comidas/nutricionista/${nutricionistaId}`);
+  }
+
+  getComidaById(planId: number, comidaId: number): Observable<ComidaResponse> {
+    return this.http.get<ComidaResponse>(`${this.baseURL}/${planId}/comidas/${comidaId}`);
+  }
+  
+  deleteComida(planId: number, comidaId: number): Observable<void> {
+    return this.http.delete<void>(`${this.baseURL}/${planId}/comidas/${comidaId}`);
+  }
+
+  editComida(planId: number, comidaId: number, updateComida: ComidaCreateUpdateRequest): Observable<ComidaResponse> {
+    return this.http.put<ComidaResponse>(`${this.baseURL}/${planId}/comidas/${comidaId}`, updateComida);
   }
 }

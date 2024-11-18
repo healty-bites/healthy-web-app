@@ -1,13 +1,12 @@
 import { Component, inject } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatOptionModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { Router, RouterLink } from '@angular/router';
-import { FormatPlanObjetivoPipe } from '../../../../core/pipes/format-plan-objetivo.pipe';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../../../core/services/auth.service';
 import { PlanAlimenticioService } from '../../../../core/services/plan-alimenticio.service';
 import { PlanAlimenticioResponse } from '../../../../shared/models/plan-alimenticio-response.model';
@@ -18,35 +17,35 @@ import { PlanAlimenticioResponse } from '../../../../shared/models/plan-alimenti
   imports: [
     MatInputModule,
     MatCardModule,
-    RouterLink,
     FormsModule,
     ReactiveFormsModule,
     MatSnackBarModule,
     MatOptionModule,
-    FormatPlanObjetivoPipe,
     MatRadioModule,
-    MatSelectModule
+    MatSelectModule,
   ],
   templateUrl: './plan-alimenticio-form-edit.component.html',
-  styleUrl: './plan-alimenticio-form-edit.component.css'
+  styleUrl: './plan-alimenticio-form-edit.component.css',
 })
 export class PlanAlimenticioFormEditComponent {
   planAlimenticioForm: FormGroup;
 
+  // Inyección de servicios
   private fb = inject(FormBuilder);
   private planAlimenticioService = inject(PlanAlimenticioService);
   private authService = inject(AuthService);
   private router = inject(Router);
   private snackBar = inject(MatSnackBar);
+  private route = inject(ActivatedRoute);
 
   constructor() {
     this.planAlimenticioForm = this.fb.group({
       id: [null],
-      planObjetivo: [''],
-      descripcion: [''],
-      duracionDias: [''],
-      esGratis: [null],
-      nutricionistaId: [this.authService.getNutricionistaId()]
+      planObjetivo: ['', Validators.required],
+      descripcion: ['', [Validators.required, Validators.minLength(10)]],
+      duracionDias: ['', [Validators.required, Validators.min(1)]],
+      esGratis: [null, Validators.required],
+      nutricionistaId: [this.authService.getNutricionistaId()],
     });
   }
 
@@ -55,42 +54,43 @@ export class PlanAlimenticioFormEditComponent {
   }
 
   ngOnInit(): void {
-    this.loadPlanAlimenticio();
-  }
-
-  loadPlanAlimenticio(): void {
-    const userId = this.authService.getNutricionistaId();
+    const planId = this.route.snapshot.paramMap.get('id'); // Obtener el ID de la ruta
   
-    if (userId) {
-      this.planAlimenticioService.getPlanAlimenticio(userId).subscribe({
-        next: (planAlimenticioArray) => {
-          // Obtiene el primer plan si existe en el array.
-          const planAlimenticio = planAlimenticioArray[0]; 
-  
-          if (planAlimenticio && planAlimenticio.id) {
-            // Almacena todos los campos y el ID en el formulario
-            this.planAlimenticioForm.patchValue({
-              ...planAlimenticio,
-              id: planAlimenticio.id
-            });
-          } else {
-            this.showSnackBar('No se encontró un plan alimenticio');
-          }
-        },
-        error: () => {
-          this.showSnackBar('Error al cargar el plan alimenticio');
-        }
-      });
+    if (planId) {
+      this.loadPlanAlimenticio(Number(planId)); // Carga el plan específico
     } else {
-      this.showSnackBar('Usuario no autenticado.');
-      this.router.navigate(['/auth/login']);
+      this.showSnackBar('No se proporcionó un ID válido para el plan');
+      this.router.navigate(['/nutricionista/plan-alimenticio/list']);
     }
   }
   
+  /**
+   * Carga los datos de un plan alimenticio específico desde el servicio.
+   * @param planId Identificador del plan a cargar.
+   */
+  loadPlanAlimenticio(planId: number): void {
+    const userId = this.authService.getNutricionistaId();
 
+    this.planAlimenticioService.getPlanAlimenticioById(planId, userId).subscribe({
+      next: (planAlimenticio) => {
+        if (planAlimenticio) {
+          this.planAlimenticioForm.patchValue(planAlimenticio); // Carga los datos al formulario
+        } else {
+          this.showSnackBar('No se encontró el plan alimenticio');
+          this.router.navigate(['/nutricionista/plan-alimenticio/list']);
+        }
+      },
+      error: () => {
+        this.showSnackBar('Error al cargar el plan alimenticio');
+      },
+    });
+  }
+
+  /**
+   * Método para enviar los datos del formulario y actualizar el plan alimenticio.
+   */
   onSubmit(): void {
     if (this.planAlimenticioForm.valid) {
-      // Obtener el ID del plan desde el formulario
       const planId = this.planAlimenticioForm.value.id;
       const updatedPlan = this.planAlimenticioForm.value;
 
@@ -103,10 +103,15 @@ export class PlanAlimenticioFormEditComponent {
           this.showSnackBar('Error al actualizar el plan alimenticio');
         },
       });
+    } else {
+      this.showSnackBar('Por favor, complete correctamente los campos.');
     }
   }
-  
 
+  /**
+   * Método para mostrar mensajes al usuario usando `MatSnackBar`.
+   * @param message Mensaje a mostrar.
+   */
   private showSnackBar(message: string): void {
     this.snackBar.open(message, 'Cerrar', {
       duration: 3000,

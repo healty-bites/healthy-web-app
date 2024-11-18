@@ -31,25 +31,16 @@
             }
           </mat-form-field>
         </div>
-        <div class="mb-3">
-          <!--<mat-radio-group formControlName="sexo" aria-label="Seleccione su género">
-              <mat-radio-button class="form-check-inline" value="male"  formControlName="sexo">Masculino</mat-radio-button>
-              <mat-radio-button class="form-check-inline" value="female"  formControlName="sexo">Femenino</mat-radio-button>
-              <mat-radio-button class="form-check-inline" value="other"  formControlName="sexo">Otro</mat-radio-button>
-          </mat-radio-group>-->
-          <mat-form-field class="form-field">
-            <mat-label>Sexo</mat-label>
-            <input
-              matInput
-              formControlName="sexo"
-              type="text"
-              placeholder="Actualice su sexo"
-            />
-            @if (controlHasError('sexo', 'required')) {
-            <mat-error>Este campo es obligatorio</mat-error>
-            }
-          </mat-form-field>
-        </div>
+
+        <div class="mb-3 form-field">
+          <label>Sexo</label>
+          <mat-radio-group formControlName="sexo" class="d-flex">
+              <mat-radio-button value="Masculino" class="me-3">Masculino</mat-radio-button>
+              <mat-radio-button value="Femenino">Femenino</mat-radio-button>
+              <mat-radio-button value="Otro">Otro</mat-radio-button>
+          </mat-radio-group>
+      </div>
+
         <div class="row mb-3">
           <div class="col-4">
             <mat-form-field class="form-field">
@@ -99,7 +90,7 @@
       </div>
       <button
           color="primary"
-          class="submit-button"
+          class="submit-button btn btn-primary"
           type="submit"
           [disabled]="profileForm.invalid"
         >

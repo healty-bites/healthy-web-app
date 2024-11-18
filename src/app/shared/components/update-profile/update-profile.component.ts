@@ -9,11 +9,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { StorageService } from '../../../core/services/storage.service';
+import { MatRadioButton, MatRadioModule } from '@angular/material/radio';
 
 @Component({
   selector: 'app-update-profile',
   standalone: true,
-  imports: [MatButtonModule, MatInputModule, MatCardModule, MatSnackBarModule,
+  imports: [MatRadioModule, MatButtonModule, MatInputModule, MatCardModule, MatSnackBarModule,
     FormsModule, ReactiveFormsModule],
   templateUrl: './update-profile.component.html',
   styleUrl: './update-profile.component.css'

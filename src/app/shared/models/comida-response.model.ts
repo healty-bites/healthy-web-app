@@ -3,7 +3,8 @@ export interface ComidaResponse {
     nombreComida: string;
     calorias: number;
     categoria: Categoria;
-    planId: number;
+    nombrePlanAlimenticio: number;
+    planAlimenticioId: number;
 }
 
 export enum Categoria {

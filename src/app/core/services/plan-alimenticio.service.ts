@@ -17,6 +17,10 @@ export class PlanAlimenticioService {
     return this.http.get<PlanAlimenticioResponse[]>(`${this.baseURL}/nutricionista/${id}`);
   }
 
+  getPlanAlimenticioById(planId: number, nutricionistaId: number): Observable<PlanAlimenticioResponse> {
+    return this.http.get<PlanAlimenticioResponse>(`${this.baseURL}/${planId}/nutricionista/${nutricionistaId}`);
+  }
+
   createPlanAlimenticio(planAlimenticio: PlanAlimenticioCreateUpdateRequest): Observable<PlanAlimenticioResponse> {
     return this.http.post<PlanAlimenticioResponse>(`${this.baseURL}`, planAlimenticio);
   }

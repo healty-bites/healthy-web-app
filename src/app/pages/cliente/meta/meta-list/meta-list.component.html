@@ -1,0 +1,36 @@
+<div class="container">
+    <div class="meta-container"  >
+        <div class="d-flex justify-content-between">
+            <h5 class="card-title mb-0"><strong>META</strong></h5>
+            <button
+                class="btn btn-primary"
+                (click)="crearMeta()"
+                [disabled]="!puedeCrearMeta"
+            >
+                Crear Meta
+            </button>
+        </div>
+        <div class="meta-user row" *ngFor="let meta of filteredMeta">
+            <h5><strong>{{ meta.nombre }}</strong></h5>
+            <div class="col">
+                <p><strong>Descripcion: </strong> {{meta.descripcion}}</p>
+                <p><strong>Peso Inicial: </strong> {{cliente.peso}} kg</p>
+                <p><strong>Peso Objetivo: </strong> {{meta.pesoObjetivo}} kg</p>
+            </div>
+            <div class="d-flex">
+                <button
+                    class="btn btn-secondary"
+                    (click)="actualizarMeta(meta.id)"
+                >
+                    Editar
+                </button>
+                <button
+                    class="ms-3 btn btn-danger"
+                    (click)="eliminarMeta(meta.id, cliente.id)"
+                >
+                    Eliminar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

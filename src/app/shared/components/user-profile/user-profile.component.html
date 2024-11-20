@@ -1,4 +1,4 @@
-<div class="container mt-5">
+<div class="container mt-5" *ngIf="profile">
     <!-- Datos Personales -->
     <div class="profile-container">
         <div class="d-flex justify-content-between">
@@ -6,8 +6,8 @@
             <h5 class="mb-0" >{{profile.nombre}} {{profile.apellido}}</h5>
             <button class="btn btn-secondary" (click)="navigateToUpdateProfile()">
                 <i class="fa-solid fa-pen"></i>
-                Editar</button>
-                
+                Editar
+            </button>    
         </div>
         <div class="datos-user row">
             <div class="col-8">

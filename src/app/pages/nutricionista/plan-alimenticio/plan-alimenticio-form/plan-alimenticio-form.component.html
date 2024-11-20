@@ -1,8 +1,9 @@
 <div class="container-form">
     <form [formGroup]="planAlimenticioForm" (ngSubmit)="onSubmit()" class="form-section">
         <h2 class="text-center">
-            <strong>Crear Plan Alimenticio</strong>
+            <strong>{{ isEditMode ? 'Actualizar Plan Alimenticio' : 'Crear Plan Alimenticio' }}</strong>
         </h2>
+        
         <div class="">
             <mat-form-field class="form-field">
                 <mat-label>Plan Objetivo</mat-label>
@@ -28,17 +29,16 @@
         
         <div>
             <mat-form-field class="form-field">
-                <mat-label>Duracion de Dias</mat-label>
+                <mat-label>Duración de Días</mat-label>
                 <input
                     matInput
                     formControlName="duracionDias"
                     type="number"
-                    placeholder="Ingrese los dias"
+                    placeholder="Ingrese los días"
                 >
             </mat-form-field>
         </div>
         
-        <!-- Remover mat-form-field de esta sección -->
         <div class="mb-3 form-field">
             <mat-radio-group formControlName="esGratis" class="d-flex container-radio-button">
                 <label id="esGratis">Es gratis: </label>
@@ -47,13 +47,18 @@
             </mat-radio-group>
         </div>
         
-        <button
-            class="btn btn-primary"
-            mat-raised-button
-            color="primary"
-            type="submit"
-        >
-            Crear Plan Alimenticio
-        </button>
+        <div class="row justify-content-between">
+            <button class="btn btn-danger col btn-update" routerLink="/nutricionista/plan-alimenticio/list">
+                Cancelar
+            </button>
+            <button
+                class="btn btn-primary col btn-update"
+                mat-raised-button
+                color="primary"
+                type="submit"
+            >
+                {{ isEditMode ? 'Actualizar' : 'Crear Plan Alimenticio' }}
+            </button>
+        </div>
     </form>
 </div>

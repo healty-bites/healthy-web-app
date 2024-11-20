@@ -67,7 +67,6 @@ export class ComidaListComponent {
         this.comida = comida;
         this.filteredComidas = comida; // Inicializa el filtro con todos los datos.
         this.extractUniquePlans(); // Extrae los planes únicos.
-        console.log(comida);
         this.showSnackBar('Comida cargada con éxito');
       },
       error: (error) => {

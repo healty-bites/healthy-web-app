@@ -1,6 +1,6 @@
 <div class="container-form">
     <form [formGroup]="comidaForm" (ngSubmit)="onSubmit()" class="form-section">
-      <h2 class="text-center"><strong>Añadir Comida</strong></h2>
+      <h2 class="text-center"><strong>{{ titulo }}</strong></h2>
   
       <div>
         <mat-form-field class="form-field">
@@ -23,9 +23,9 @@
             type="text"
             placeholder="Ingrese el nombre de la comida"
           />
-          @if (controlHasError('nombreComida', 'required')) {
-            <mat-error>Este campo es obligatorio</mat-error>
-          }
+          <mat-error *ngIf="controlHasError('nombreComida', 'required')">
+            Este campo es obligatorio
+          </mat-error>
         </mat-form-field>
       </div>
   
@@ -38,17 +38,17 @@
             type="number"
             placeholder="Ingrese las calorías"
           />
-          @if (controlHasError('calorias', 'required')) {
-            <mat-error>Este campo es obligatorio</mat-error>
-          }
-          @if (controlHasError('calorias', 'min')) {
-            <mat-error>Introduzca un número válido.</mat-error>
-          }
+          <mat-error *ngIf="controlHasError('calorias', 'required')">
+            Este campo es obligatorio
+          </mat-error>
+          <mat-error *ngIf="controlHasError('calorias', 'min')">
+            Introduzca un número válido.
+          </mat-error>
         </mat-form-field>
       </div>
   
-      <button class="btn btn-primary" mat-raised-button color="primary" type="submit">
-        Añadir Comida
+      <button mat-raised-button color="primary" type="submit" class="btn btn-primary">
+        {{ textoBoton }}
       </button>
     </form>
   </div>

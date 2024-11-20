@@ -50,7 +50,6 @@ export class PlanAlimenticioListComponent {
       next: (planAlimenticio) => {
         this.planAlimenticio = planAlimenticio;
         this.filteredPlanAlimenticio = planAlimenticio;
-        console.log(planAlimenticio);
         this.showSnackBar('Plan Alimenticio cargado con éxito');
       },
       error: (error) => {

@@ -1,10 +1,10 @@
 <mat-form-field>
     <mat-label>Filtrar por Id de Plan:</mat-label>
     <mat-select [(value)]="selectedPlanId" (selectionChange)="filterComidas()">
-      <mat-option [value]="null">Todos los planes</mat-option>
-      <mat-option *ngFor="let plan of uniquePlans" [value]="plan.planAlimenticioId">
-        Plan: {{ plan.planAlimenticioId }}
-      </mat-option>
+        <mat-option [value]="null">Todos los planes</mat-option>
+        <mat-option *ngFor="let plan of uniquePlans" [value]="plan.planAlimenticioId">
+            Plan: {{ plan.planAlimenticioId }}
+        </mat-option>
     </mat-select>
   </mat-form-field>  
 
@@ -40,7 +40,7 @@
             <div class="button-group d-flex">
                 <button
                     mat-raised-button
-                    class="btn btn-primary"
+                    class="btn btn-primary me-3"
                     (click)="editarComidaNavigate(comida.planAlimenticioId, comida.id)"
                 >
                     Editar

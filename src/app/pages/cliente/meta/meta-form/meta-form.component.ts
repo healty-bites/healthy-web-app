@@ -54,7 +54,7 @@ export class MetaFormComponent {
     this.metaForm = this.fb.group({
       nombre: ['', Validators.required],
       descripcion: ['', Validators.required],
-      pesoObjetivo: ['', Validators.required],
+      pesoObjetivo: ['', Validators.required], // Peso objetivo debe ser mayor a 0
       clienteId: [clienteId], // Asigna la ID del cliente
     });
   

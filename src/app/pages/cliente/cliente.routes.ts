@@ -9,6 +9,8 @@ import { ContenidoComponent } from './contenido/contenido.component';
 import { UpdateProfileComponent } from '../../shared/components/update-profile/update-profile.component';
 import { MetaListComponent } from './meta/meta-list/meta-list.component';
 import { MetaFormComponent } from './meta/meta-form/meta-form.component';
+import { MetaSeguimientoFormComponent } from './meta/meta-seguimiento-form/meta-seguimiento-form.component';
+import { GraficoPesoComponent } from './meta/grafico-peso/grafico-peso.component';
 
 export const clienteRoutes: Routes = [
     {
@@ -22,7 +24,14 @@ export const clienteRoutes: Routes = [
             {path: 'meta/create', component: MetaFormComponent},
             {path: 'meta/update/:metaId', component: MetaFormComponent},
 
+            {path: 'meta/:metaId/seguimiento/create', component: MetaSeguimientoFormComponent},
+            {path: 'meta/:metaId/seguimiento/update/:id', component: MetaSeguimientoFormComponent},
+
+            {path: 'meta/grafico', component: GraficoPesoComponent},
+
+
             {path: 'seguimiento', component: SeguimientoComponent},
+
             {path: 'contenido', component: ContenidoComponent},
             {path: 'grupo', component: GrupoComponent},
         ]

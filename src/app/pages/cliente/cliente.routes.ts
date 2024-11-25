@@ -11,6 +11,8 @@ import { MetaListComponent } from './meta/meta-list/meta-list.component';
 import { MetaFormComponent } from './meta/meta-form/meta-form.component';
 import { MetaSeguimientoFormComponent } from './meta/meta-seguimiento-form/meta-seguimiento-form.component';
 import { GraficoPesoComponent } from './meta/grafico-peso/grafico-peso.component';
+import { HabitosFormComponent } from './seguimiento/habitos-form/habitos-form.component';
+import { HabitosListComponent } from './seguimiento/habitos-list/habitos-list.component';
 
 export const clienteRoutes: Routes = [
     {
@@ -29,8 +31,10 @@ export const clienteRoutes: Routes = [
 
             {path: 'meta/grafico', component: GraficoPesoComponent},
 
-
             {path: 'seguimiento', component: SeguimientoComponent},
+            {path: 'seguimiento/habitos', component: HabitosListComponent},
+            {path: 'seguimiento/habitos/create', component: HabitosFormComponent},
+            {path: 'seguimiento/habitos/update/:habitoId', component: HabitosFormComponent},
 
             {path: 'contenido', component: ContenidoComponent},
             {path: 'grupo', component: GrupoComponent},

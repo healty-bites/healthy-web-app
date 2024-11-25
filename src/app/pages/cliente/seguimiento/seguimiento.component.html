@@ -1,1 +1,50 @@
-<p>seguimiento works!</p>
+<div>
+    <h4><strong>Seguimiento</strong></h4>
+    <p>Hoy: {{ fechaActual }}</p>
+
+    <!--<app-habitos-list></app-habitos-list>-->
+    <section class="card-container">
+        <h5><strong>Registro de Habitos:</strong></h5>
+        <div class="container">
+            <mat-card *ngFor="let habito of filteredHabito">
+                <div class="card">
+                    <p><strong>Nombre: </strong> {{habito.nombre}}</p>
+                    <mat-card-content class="d-flex">
+                        <div class="col-6">
+                            <p>
+                                <i class="fa-solid fa-bed"></i>
+                                <strong> Calidad de sueño: </strong> {{habito.calidadDeSueno}} horas
+                            </p>
+                            <hr>
+                            <p>
+                                <i class="fa-solid fa-droplet"></i>
+                                <strong> Hidratacion: </strong> {{habito.hidratacion}} L
+                            </p>
+                            <hr>
+                        </div>
+                        <div class="col-6">
+                            <p>
+                                <i class="fa-solid fa-utensils"></i>
+                                <strong> Alimentacion: </strong> {{habito.alimentacion}} kcal
+                            </p>
+                            <hr>
+                            <p>
+                                <i class="fa-solid fa-fire"></i>
+                                <strong> Ejercicio: </strong> {{habito.ejercicio}} horas
+                            </p>
+                            <hr>
+                        </div>
+                    </mat-card-content>
+                    <div class="d-flex">
+                        <button class="btn btn-primary" routerLink="habitos">Detalles</button>
+                    </div>
+                </div>
+            </mat-card>
+        </div>
+    </section>
+
+    <section class="card-container">
+        <h5><strong>Seguimiento de Racha:</strong></h5>
+        
+    </section>
+</div>

@@ -1,6 +1,5 @@
 import { Routes } from '@angular/router';
 import { NutricionistaLayoutComponent } from './nutricionista-layout/nutricionista-layout.component';
-import { RecompensasComponent } from './recompensas/recompensas.component';
 import { PlanAlimenticioListComponent } from './plan-alimenticio/plan-alimenticio-list/plan-alimenticio-list.component';
 import { ComidaListComponent } from './comida/comida-list/comida-list.component';
 import { GestionarClientesListComponent } from './gestionar-clientes/gestionar-clientes-list/gestionar-clientes-list.component';
@@ -8,6 +7,8 @@ import { ContenidoListComponent } from './contenido/contenido-list/contenido-lis
 import { ContenidoFormComponent } from './contenido/contenido-form/contenido-form.component';
 import { PlanAlimenticioFormComponent } from './plan-alimenticio/plan-alimenticio-form/plan-alimenticio-form.component';
 import { ComidaFormComponent } from './comida/comida-form/comida-form.component';
+import { RecompensasListComponent } from './recompensas/recompensas-list/recompensas-list.component';
+import { RecompensasFormComponent } from './recompensas/recompensas-form/recompensas-form.component';
 
 export const nutricionistaRoutes: Routes = [
     {
@@ -30,7 +31,9 @@ export const nutricionistaRoutes: Routes = [
             {path: 'contenido/create', component: ContenidoFormComponent},
             {path: 'contenido/edit/:id', component: ContenidoFormComponent},
 
-            {path: 'recompensa', component: RecompensasComponent}
+            {path: 'recompensa', component: RecompensasListComponent},
+            {path: 'recompensa/create', component: RecompensasFormComponent},
+            {path: 'recompensa/edit/:id', component: RecompensasFormComponent},
         ]
     }
 ];

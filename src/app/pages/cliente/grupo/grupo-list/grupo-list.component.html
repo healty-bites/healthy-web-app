@@ -1,0 +1,15 @@
+<div class="plan">
+    <div class="container">
+        <div class="card" *ngFor="let publicacion of filteredPublicaciones">
+            <div class="mat-mdc-card-header">
+                <div class="mat-mdc-card-title">
+                    <strong> {{ publicacion.titulo }} </strong>
+                </div>
+            </div>
+            <div class="mat-mdc-card-content">
+                <p> {{publicacion.descripcion}} </p>
+                <img [src]="publicacion.publicacionPath | apiImg" alt="Cover">
+            </div>
+        </div>
+    </div>
+</div>

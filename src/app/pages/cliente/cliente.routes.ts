@@ -13,6 +13,9 @@ import { MetaSeguimientoFormComponent } from './meta/meta-seguimiento-form/meta-
 import { GraficoPesoComponent } from './meta/grafico-peso/grafico-peso.component';
 import { HabitosFormComponent } from './seguimiento/habitos-form/habitos-form.component';
 import { HabitosListComponent } from './seguimiento/habitos-list/habitos-list.component';
+import { GrupoFormComponent } from './grupo/grupo-form/grupo-form.component';
+import { PublicacionListComponent } from './publicacion/publicacion-list/publicacion-list.component';
+import { PublicacionFormComponent } from './publicacion/publicacion-form/publicacion-form.component';
 
 export const clienteRoutes: Routes = [
     {
@@ -37,7 +40,14 @@ export const clienteRoutes: Routes = [
             {path: 'seguimiento/habitos/update/:habitoId', component: HabitosFormComponent},
 
             {path: 'contenido', component: ContenidoComponent},
+            
             {path: 'grupo', component: GrupoComponent},
+            {path: 'grupo/create', component: GrupoFormComponent},
+            {path: 'grupo/update/:grupoId', component: GrupoFormComponent},
+
+            {path: 'grupo/:IdGrupo', component: PublicacionListComponent },
+            {path: 'grupo/:IdGrupo/publicacion/update/:publicacionId', component: PublicacionFormComponent },
+            {path: 'grupo/:IdGrupo/publicacion/create', component: PublicacionFormComponent },
         ]
     }
 ];

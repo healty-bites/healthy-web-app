@@ -1,8 +1,9 @@
 import { Component, inject } from '@angular/core';
 import { FooterComponent } from "../../../shared/components/footer/footer.component";
 import { NavbarComponent } from "../../../shared/components/navbar/navbar.component";
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-cliente-layout',

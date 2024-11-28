@@ -13,6 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
+            "allowedCommonJsDependencies": ["apexcharts"],
             "outputPath": "dist/healthybites-app",
             "index": "src/index.html",
             "browser": "src/main.ts",

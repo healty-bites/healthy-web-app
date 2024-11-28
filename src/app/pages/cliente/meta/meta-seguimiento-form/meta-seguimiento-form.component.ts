@@ -63,8 +63,6 @@ export class MetaSeguimientoFormComponent implements OnInit {
       this.loadSeguimiento(this.seguimientoId);
     }
   }
-  
-  
 
   private loadSeguimiento(seguimientoId: number): void {
     const metaId = Number(this.route.snapshot.paramMap.get('metaId'));

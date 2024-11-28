@@ -4,4 +4,5 @@ export interface MetaResponseModel {
     descripcion: string;
     pesoObjetivo: number;
     clienteNombre: string;
+    metaId: number;
 }

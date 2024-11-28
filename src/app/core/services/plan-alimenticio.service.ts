@@ -13,12 +13,20 @@ export class PlanAlimenticioService {
   private baseURL = `${environment.baseUrl}/plan-alimenticio`;
   private http = inject(HttpClient);
 
+  getAllPlanAlimenticio(): Observable<PlanAlimenticioResponse[]> {
+    return this.http.get<PlanAlimenticioResponse[]>(`${this.baseURL}`);
+  }
+
   getPlanAlimenticio(id: number): Observable<PlanAlimenticioResponse[]> {
     return this.http.get<PlanAlimenticioResponse[]>(`${this.baseURL}/nutricionista/${id}`);
   }
 
   getPlanAlimenticioById(planId: number, nutricionistaId: number): Observable<PlanAlimenticioResponse> {
     return this.http.get<PlanAlimenticioResponse>(`${this.baseURL}/${planId}/nutricionista/${nutricionistaId}`);
+  }
+
+  getPlanById(planId: number): Observable<PlanAlimenticioResponse> {
+    return this.http.get<PlanAlimenticioResponse>(`${this.baseURL}/${planId}`);
   }
 
   createPlanAlimenticio(planAlimenticio: PlanAlimenticioCreateUpdateRequest): Observable<PlanAlimenticioResponse> {

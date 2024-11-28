@@ -30,7 +30,7 @@ export class LoginComponent {
   private readonly CLIENTE_ROL = 'CLIENTE';
   private readonly NUTRICIONISTA_ROL = 'NUTRICIONISTA';
   private readonly CLIENTE_ROUTE = '/cliente/perfil';
-  private readonly NUTRICIONISTA_ROUTE = '/nutricionista/perfil';
+  private readonly NUTRICIONISTA_ROUTE = '/nutricionista/gestionar-perfiles/list';
   private readonly DEFAULT_ROUTE = '/home';
 
   constructor(){

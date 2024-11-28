@@ -19,6 +19,10 @@ export class ComidaService {
     return this.http.post<ComidaResponse>(`${this.baseURL}/${planId}/comidas`, comida);
   }
 
+  getAllByPlanId(planId: number): Observable<ComidaResponse[]> {
+    return this.http.get<ComidaResponse[]>(`${this.baseURL}/${planId}/comidas`);
+  }
+
   getAllComidaByPlan(planId: number): Observable<ComidaResponse[]> {
     return this.http.get<ComidaResponse[]>(`${this.baseURL}/${planId}/comidas`);
   }

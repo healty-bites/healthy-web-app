@@ -104,7 +104,7 @@ export class MetaListComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadMeta();
-    this.loadSeguimiento();
+    this.loadSeguimiento(this.metaService.getMetaId());
   }
 
   loadMeta(): void {
@@ -139,18 +139,16 @@ export class MetaListComponent implements OnInit {
     
   }
 
-  loadSeguimiento(pageIndex: number = 0, pageSize: number = 5): void {
-
-    const metaId = Number(this.route.snapshot.paramMap.get('metaId'));
-
+  loadSeguimiento(metaId: number, pageIndex: number = 0, pageSize: number = 5): void {
     this.seguimientoService.paginateSeguimientos(metaId, pageIndex, pageSize).subscribe({
       next: (response: PageableResponse<SeguimientoResponse>) => {
+        // Filtra los seguimientos para incluir solo los que pertenecen a la meta actual
         this.seguimiento = response.content;
         this.filteredSeguimiento = response.content;
         this.totalElements = response.totalElements;
         this.pageSize = response.size;
         this.pageIndex = response.number;
-
+  
         this.chartOptions.series = [
           {
             name: "Peso Diario",
@@ -165,7 +163,6 @@ export class MetaListComponent implements OnInit {
         this.showSnackBar('Error al cargar los seguimientos');
       }
     });
-  
   }
 
   crearMeta(): void {
@@ -187,7 +184,7 @@ export class MetaListComponent implements OnInit {
   eliminarSeguimiento(seguimientoId: number, metaId: number): void {
     this.seguimientoService.eliminarSeguimiento(metaId, seguimientoId).subscribe({
       next: () => {
-        this.loadSeguimiento();
+        this.loadSeguimiento(metaId);
         this.showSnackBar('Seguimiento eliminado con éxito');
       },
       error: (error) => {

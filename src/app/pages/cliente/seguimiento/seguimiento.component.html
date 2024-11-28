@@ -6,11 +6,19 @@
         
             <!--<app-habitos-list></app-habitos-list>-->
             <section class="card-container">
-                <h5><strong>Registro de Habitos:</strong></h5>
+                <div class="d-flex">
+                    <h5><strong>Registro de Habitos:</strong></h5>
+                    <div>
+                        <button mat-raised-button class="ms-3 btn btn-primary" (click)="crearHabito()">
+                            Crear Habito
+                        </button>
+                    </div>
+                </div>
                 <div class="container">
                     <mat-card *ngFor="let habito of filteredHabito">
                         <div class="card">
                             <p><strong>Nombre: </strong> {{habito.nombre}}</p>
+                            
                             <mat-card-content class="d-flex">
                                 <div class="col-6">
                                     <p>

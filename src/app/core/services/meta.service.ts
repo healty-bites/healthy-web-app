@@ -12,6 +12,7 @@ export class MetaService {
 
     private baseURL = `${environment.baseUrl}/meta`;
     private http = inject(HttpClient);
+    private metaId?: number;
 
     createMeta(meta: MetaCreateRequestModel): Observable<MetaResponseModel> {
         return this.http.post<MetaResponseModel>(`${this.baseURL}`, meta);
@@ -31,5 +32,13 @@ export class MetaService {
 
     eliminarMeta(metaId: number, clienteId: number): Observable<void> {
         return this.http.delete<void>(`${this.baseURL}/${metaId}/cliente/${clienteId}`);
+    }
+
+    setMetaId(metaId: number): void {
+        this.metaId = metaId;
+    }
+
+    getMetaId(): number {
+        return Number(this.metaId);
     }
 }

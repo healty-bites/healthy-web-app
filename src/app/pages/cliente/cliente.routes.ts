@@ -16,6 +16,7 @@ import { HabitosListComponent } from './seguimiento/habitos-list/habitos-list.co
 import { GrupoFormComponent } from './grupo/grupo-form/grupo-form.component';
 import { PublicacionListComponent } from './publicacion/publicacion-list/publicacion-list.component';
 import { PublicacionFormComponent } from './publicacion/publicacion-form/publicacion-form.component';
+import { ContenidoDetalleComponent } from './contenido/contenido-detalle/contenido-detalle.component';
 
 export const clienteRoutes: Routes = [
     {
@@ -40,6 +41,7 @@ export const clienteRoutes: Routes = [
             {path: 'seguimiento/habitos/update/:habitoId', component: HabitosFormComponent},
 
             {path: 'contenido', component: ContenidoComponent},
+            {path: 'contenido/:type/:id', component: ContenidoDetalleComponent},
             
             {path: 'grupo', component: GrupoComponent},
             {path: 'grupo/create', component: GrupoFormComponent},

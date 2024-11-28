@@ -75,6 +75,10 @@ export class SeguimientoComponent {
     });
   }
 
+  crearHabito(): void {
+    this.router.navigate(['/cliente/seguimiento/habitos/create']);
+  }
+
   private showSnackBar(message: string): void {
     this.snackBar.open(message, 'Cerrar', {
       duration: 3000,

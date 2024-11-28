@@ -1,5 +1,4 @@
-import { Component, inject } from '@angular/core';
-import { HabitosListComponent } from "./habitos-list/habitos-list.component";
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
@@ -10,6 +9,8 @@ import { RouterModule, Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
 import { HabitoService } from '../../../core/services/habito.service';
 import { HabitoResponse } from '../../../shared/models/habito-response.model';
+import { RecompensaResponse } from '../../../shared/models/recompensa-response.model';
+import { RachaService } from '../../../core/services/racha.service';
 
 @Component({
   selector: 'app-seguimiento',
@@ -24,9 +25,9 @@ import { HabitoResponse } from '../../../shared/models/habito-response.model';
     MatCardModule,
   ],
   templateUrl: './seguimiento.component.html',
-  styleUrl: './seguimiento.component.css'
+  styleUrls: ['./seguimiento.component.css']
 })
-export class SeguimientoComponent {
+export class SeguimientoComponent implements OnInit {
 
   fechaActual: string = '';
 
@@ -44,9 +45,11 @@ export class SeguimientoComponent {
 
   habito: HabitoResponse[] = [];
   filteredHabito: HabitoResponse[] = [];
+  recompensas: RecompensaResponse[] = [];
 
   private habitoService = inject(HabitoService);
   private authService = inject(AuthService);
+  private rachaService = inject(RachaService);
   private snackBar = inject(MatSnackBar);
   private router = inject(Router);
 
@@ -54,6 +57,7 @@ export class SeguimientoComponent {
     const hoy = new Date();
     this.fechaActual = this.formatearFecha(hoy); // Formatear la fecha
     this.loadHabitos();
+    this.loadRecompensas();
   }
 
   // Cargo los hábitos del cliente
@@ -71,6 +75,22 @@ export class SeguimientoComponent {
       error: (error) => {
         console.error(error);
         this.showSnackBar('Error al cargar los hábitos');
+      }
+    });
+  }
+
+  // Cargo las recompensas de racha del cliente
+  loadRecompensas(): void {
+    const clienteId = this.authService.getClienteId();
+  
+    this.rachaService.getAllRecompensasByClienteId(clienteId).subscribe({
+      next: (recompensas) => {
+        this.recompensas = recompensas;
+        console.log(this.recompensas);
+      },
+      error: (error) => {
+        console.error(error);
+        this.showSnackBar('Error al cargar las recompensas');
       }
     });
   }

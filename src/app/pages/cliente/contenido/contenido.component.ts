@@ -11,6 +11,9 @@ import { MatSelectModule } from '@angular/material/select';
 import { ApiImgPipe } from '../../../core/pipes/api-img.pipe';
 import { FormatPlanObjetivoPipe } from '../../../core/pipes/format-plan-objetivo.pipe';
 import { Router } from '@angular/router';
+import { AccesoContenido } from '../../../core/services/acceso-contenido.service';
+import { AuthService } from '../../../core/services/auth.service';
+import { AccesoPlanService } from '../../../core/services/acceso-plan.service';
 
 @Component({
   selector: 'app-contenido',
@@ -41,6 +44,9 @@ export class ContenidoComponent {
 
   private contenidoService = inject(ContenidoService);
   private planAlimenticioService = inject(PlanAlimenticioService);
+  private authService = inject(AuthService);
+  private accesoContenido = inject(AccesoContenido);
+  private accesoPlan = inject(AccesoPlanService);
   private snackBar = inject(MatSnackBar);
   private router = inject(Router);
 
@@ -56,7 +62,6 @@ export class ContenidoComponent {
         this.filteredContenido = contenido;
         this.uniqueTiposContenido = [...new Set(contenido.map(item => item.tipoContenido))];
         this.uniqueCategoriasContenido = [...new Set(contenido.map(item => item.categoriaContenido))];
-        console.log(contenido);
       },
       error: (error) => {
         this.snackBar.open('Error al cargar los contenidos', 'Cerrar');
@@ -71,7 +76,6 @@ export class ContenidoComponent {
         this.planAlimenticio = planAlimenticio;
         this.filteredPlanAlimenticio = planAlimenticio;
         this.uniquePlanObjetivos = [...new Set(planAlimenticio.map(plan => plan.planObjetivo))];
-        console.log(planAlimenticio);
       },
       error: (error) => {
         this.snackBar.open('Error al cargar los planes alimenticios', 'Cerrar');
@@ -94,14 +98,38 @@ export class ContenidoComponent {
   }
 
   verDetalles(item: ContenidoResponse) {
+    const clienteId = this.authService.getClienteId();
     if (item.esGratis) {
       this.router.navigate(['cliente/contenido', 'contenido', item.id]);
     } else {
-      this.snackBar.open('Este contenido no es gratuito', 'Cerrar');
+      this.accesoContenido.isClientePremiumOrVip(clienteId).subscribe(isPremiumOrVip => {
+        if (isPremiumOrVip) {
+          this.router.navigate(['cliente/contenido', 'contenido', item.id]);
+        } else {
+          this.snackBar.open('Este contenido no es gratuito', 'Cerrar');
+        }
+      }, error => {
+        this.snackBar.open('Error al verificar el tipo de cliente', 'Cerrar');
+        console.error(error);
+      });
     }
   }
 
   verPlanDetalles(plan: PlanAlimenticioResponse) {
-    this.router.navigate(['cliente/contenido', 'plan', plan.id]);
+    const clienteId = this.authService.getClienteId();
+    if (plan.esGratis) {
+      this.router.navigate(['cliente/contenido', 'plan', plan.id]);
+    } else {
+      this.accesoPlan.isClientePremiumOrVip(clienteId).subscribe(isPremiumOrVip => {
+        if (isPremiumOrVip) {
+          this.router.navigate(['cliente/contenido', 'plan', plan.id]);
+        } else {
+          this.snackBar.open('Este plan alimenticio no es gratuito', 'Cerrar');
+        }
+      }, error => {
+        this.snackBar.open('Error al verificar el tipo de cliente', 'Cerrar');
+        console.error(error);
+      });
+    }
   }
 }

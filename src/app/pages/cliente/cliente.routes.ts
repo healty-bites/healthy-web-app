@@ -17,6 +17,8 @@ import { GrupoFormComponent } from './grupo/grupo-form/grupo-form.component';
 import { PublicacionListComponent } from './publicacion/publicacion-list/publicacion-list.component';
 import { PublicacionFormComponent } from './publicacion/publicacion-form/publicacion-form.component';
 import { ContenidoDetalleComponent } from './contenido/contenido-detalle/contenido-detalle.component';
+import { SuscripcionListComponent } from './suscripcion/suscripcion-list/suscripcion-list.component';
+import { RachaFormComponent } from './seguimiento/racha-form/racha-form.component';
 
 export const clienteRoutes: Routes = [
     {
@@ -50,6 +52,11 @@ export const clienteRoutes: Routes = [
             {path: 'grupo/:IdGrupo', component: PublicacionListComponent },
             {path: 'grupo/:IdGrupo/publicacion/update/:publicacionId', component: PublicacionFormComponent },
             {path: 'grupo/:IdGrupo/publicacion/create', component: PublicacionFormComponent },
+
+            {path: 'suscripciones', component: SuscripcionListComponent},
+            {path: 'suscripciones/create', component: SuscripcionListComponent},
+
+            {path: 'seguimiento/racha-form', component: RachaFormComponent}
         ]
     }
 ];

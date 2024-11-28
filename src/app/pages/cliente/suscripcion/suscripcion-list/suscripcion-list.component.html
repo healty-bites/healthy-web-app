@@ -1,0 +1,14 @@
+<div *ngIf="loading" class="loading-spinner">Cargando...</div>
+
+<form [formGroup]="subscriptionForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label for="tipoSuscripcion">Selecciona un tipo de suscripción:</label>
+    <select formControlName="tipoSuscripcion" id="tipoSuscripcion" required>
+      <option *ngFor="let tipo of tiposSuscripcion" [value]="tipo">{{ tipo }}</option>
+    </select>
+  </div>
+
+  <button type="submit" [disabled]="subscriptionForm.invalid || loading">
+    Suscribirme
+  </button>
+</form>

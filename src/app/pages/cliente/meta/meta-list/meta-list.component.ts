@@ -104,12 +104,10 @@ export class MetaListComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadMeta();
-    this.loadSeguimiento(this.metaService.getMetaId());
   }
 
   loadMeta(): void {
     const clienteId = this.authService.getClienteId();
-    const metaId = Number(this.route.snapshot.paramMap.get('metaId'));
 
     if (clienteId) {
       this.userProfileService.getUserProfile(clienteId).subscribe({
@@ -126,6 +124,10 @@ export class MetaListComponent implements OnInit {
           // Deshabilita el botón si ya hay metas
           this.puedeCrearMeta = this.filteredMeta.length === 0;
           
+          // Cargar seguimientos para la primera meta
+          if (this.filteredMeta.length > 0) {
+            this.loadSeguimiento(this.filteredMeta[0].id, clienteId);
+          }
         },
         error: (error) => {
           this.showSnackBar('Error al cargar las metas');
@@ -139,8 +141,8 @@ export class MetaListComponent implements OnInit {
     
   }
 
-  loadSeguimiento(metaId: number, pageIndex: number = 0, pageSize: number = 5): void {
-    this.seguimientoService.paginateSeguimientos(metaId, pageIndex, pageSize).subscribe({
+  loadSeguimiento(metaId: number, clienteId: number, pageIndex: number = 0, pageSize: number = 5): void {
+    this.seguimientoService.paginateSeguimientosByClienteId(metaId, clienteId, pageIndex, pageSize).subscribe({
       next: (response: PageableResponse<SeguimientoResponse>) => {
         // Filtra los seguimientos para incluir solo los que pertenecen a la meta actual
         this.seguimiento = response.content;
@@ -184,7 +186,7 @@ export class MetaListComponent implements OnInit {
   eliminarSeguimiento(seguimientoId: number, metaId: number): void {
     this.seguimientoService.eliminarSeguimiento(metaId, seguimientoId).subscribe({
       next: () => {
-        this.loadSeguimiento(metaId);
+        this.loadSeguimiento(metaId, this.cliente.id);
         this.showSnackBar('Seguimiento eliminado con éxito');
       },
       error: (error) => {
@@ -211,7 +213,8 @@ export class MetaListComponent implements OnInit {
   onPageChange(event: PageEvent): void {
     this.pageIndex = event.pageIndex;
     this.pageSize = event.pageSize;
-    this.loadSeguimiento(this.pageIndex, this.pageSize);
+    const metaId = this.filteredMeta.length > 0 ? this.filteredMeta[0].id : 0;
+    this.loadSeguimiento(metaId, this.cliente.id, this.pageIndex, this.pageSize);
   }
 
   private showSnackBar(message: string): void {

@@ -39,4 +39,14 @@ export class SeguimientoService {
         return this.http.get<PageableResponse<SeguimientoResponse>>(`${this.baseURL}/${metaId}/seguimientos/page`,
             { params });
     }
+
+    paginateSeguimientosByClienteId(metaId: number, clienteId: number, page: number, size: number): Observable<PageableResponse<SeguimientoResponse>> {
+        const params = new HttpParams().set('page', page.toString()).set('size', size.toString());
+        return this.http.get<PageableResponse<SeguimientoResponse>>(`${this.baseURL}/${metaId}/seguimientos/cliente/${clienteId}/page`,
+            { params });
+    }
+
+    getAllSeguimiento(metaId: number, clienteId: number): Observable<SeguimientoResponse[]> {
+        return this.http.get<SeguimientoResponse[]>(`${this.baseURL}/${metaId}/seguimientos/cliente/${clienteId}`);
+    }
 }

@@ -7,20 +7,20 @@ import { RecompensaResponse } from '../../shared/models/recompensa-response.mode
 @Injectable({
   providedIn: 'root'
 })
-export class PublicacionService {
+export class RachaService {
 
     private baseURL = `${environment.baseUrl}/racha`;
     private http = inject(HttpClient);
 
     addRecompensaToCliente(clienteId: number, recompensaId: number): Observable<RecompensaResponse> {
-        return this.http.post<RecompensaResponse>(`${this.baseURL}/cliente/${clienteId}/recompensa/${recompensaId}`, {});
+        return this.http.post<RecompensaResponse>(`${this.baseURL}/${clienteId}/recompensa/${recompensaId}`, {});
     }
 
     deleteRecompensaFromCliente(clienteId: number, recompensaId: number): Observable<RecompensaResponse> {
-        return this.http.delete<RecompensaResponse>(`${this.baseURL}/cliente/${clienteId}/remove/${recompensaId}`);
+        return this.http.delete<RecompensaResponse>(`${this.baseURL}/${clienteId}/remove/${recompensaId}`);
     }
 
     getAllRecompensasByClienteId(clienteId: number): Observable<RecompensaResponse[]> {
-        return this.http.get<RecompensaResponse[]>(`${this.baseURL}/cliente/${clienteId}/all-recompensas`);
+        return this.http.get<RecompensaResponse[]>(`${this.baseURL}/${clienteId}/all-recompensas`);
     }
 }

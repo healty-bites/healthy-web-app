@@ -62,9 +62,6 @@
                   <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
                   <mat-cell *matCellDef="let seguimiento">
                     <div class="button-group d-flex">
-                      <button mat-raised-button class="btn btn-primary me-3" (click)="editarSeguimiento(meta.id, seguimiento.id)">
-                        Editar
-                      </button>
                       <button mat-raised-button class="btn btn-danger" (click)="eliminarSeguimiento(seguimiento.id, meta.id)">
                         Eliminar
                       </button>

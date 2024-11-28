@@ -13,7 +13,7 @@ export const authRoutes: Routes = [
             {path: 'login', component: LoginComponent},
             {path: 'register', component: RegisterComponent},
             {path: 'reset-password', component: RequestPasswordResetComponent},
-            {path: 'forgot/:token', component: ResetPasswordComponent}
+            {path: 'reset-password/:token', component: ResetPasswordComponent}
         ]
     }
 ];

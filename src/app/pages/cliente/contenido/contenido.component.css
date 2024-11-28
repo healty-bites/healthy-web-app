@@ -94,7 +94,9 @@ main {
   
   img {
     width: 100%;
-    height: auto;
-    border-radius: 8px;
-    margin-bottom: 20px;
-  }
+    max-width: 100%; /* Ajusta el ancho máximo al 100% del contenedor */
+    max-height: 300px; /* Ajusta la altura máxima según tus necesidades */
+    object-fit: contain; /* Mantiene la proporción de la imagen */
+    border-radius: 8px; /* Bordes redondeados para una apariencia más elegante */
+    margin-bottom: 15px; /* Espacio debajo de la imagen */
+}

@@ -5,11 +5,12 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
 import { UserProfileService } from '../../../core/services/user-profile.service';
 import { UserProfile } from '../../models/user-profile.model';
+import { SuscripcionListComponent } from "../../../pages/cliente/suscripcion/suscripcion-list/suscripcion-list.component";
 
 @Component({
   selector: 'app-user-profile',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, SuscripcionListComponent],
   templateUrl: './user-profile.component.html',
   styleUrl: './user-profile.component.css'
 })

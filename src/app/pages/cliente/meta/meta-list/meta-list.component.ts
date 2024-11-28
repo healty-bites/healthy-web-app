@@ -10,7 +10,7 @@ import { UserProfileService } from '../../../../core/services/user-profile.servi
 import { SeguimientoResponse } from '../../../../shared/models/seguimiento-response.model';
 import { SeguimientoService } from '../../../../core/services/seguimiento.service';
 import { FormatTimePipe } from '../../../../core/pipes/format-time.pipe';
-import { GraficoPesoComponent } from "../grafico-peso/grafico-peso.component";
+import { GraficoPesoComponent } from '../grafico-peso/grafico-peso.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
@@ -22,7 +22,7 @@ import {
   ApexXAxis,
   ApexTitleSubtitle,
   NgApexchartsModule
-} from "ng-apexcharts";
+} from 'ng-apexcharts';
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -42,27 +42,23 @@ export type ChartOptions = {
     FormatTimePipe,
     MatPaginatorModule,
     NgApexchartsModule
-],
+  ],
   templateUrl: './meta-list.component.html',
-  styleUrl: './meta-list.component.css'
+  styleUrls: ['./meta-list.component.css']
 })
 export class MetaListComponent implements OnInit {
 
   cliente!: UserProfile;
-
   meta: MetaResponseModel[] = [];
   filteredMeta: MetaResponseModel[] = [];
-
   seguimiento: SeguimientoResponse[] = [];
   filteredSeguimiento: SeguimientoResponse[] = [];
-
-  puedeCrearMeta: boolean = true; // Inicialmente se puede crear una meta
-  
+  puedeCrearMeta: boolean = true;
   totalElements = 0;
   pageSize = 5;
   pageIndex = 0;
 
-  @ViewChild("chart") chart!: ChartComponent;
+  @ViewChild('chart') chart!: ChartComponent;
   public chartOptions: Partial<ChartOptions>;
 
   private userProfileService = inject(UserProfileService);
@@ -77,30 +73,24 @@ export class MetaListComponent implements OnInit {
     this.chartOptions = {
       series: [
         {
-          name: "Peso Diario",
+          name: 'Peso Diario',
           data: []
         }
       ],
       chart: {
         height: 350,
-        type: "area"
+        type: 'area'
       },
       title: {
-        text: "Visualizacion de progreso"
+        text: 'Visualización de Progreso'
       },
       xaxis: {
         categories: []
-      },
+      }
     };
   }
 
-  displayedColumns: string[] = [
-    'id',
-    'observaciones',
-    'pesoDelDia',
-    'fecha',
-    'acciones'
-  ]
+  displayedColumns: string[] = ['id', 'observaciones', 'pesoDelDia', 'fecha', 'acciones'];
 
   ngOnInit(): void {
     this.loadMeta();
@@ -109,59 +99,56 @@ export class MetaListComponent implements OnInit {
   loadMeta(): void {
     const clienteId = this.authService.getClienteId();
 
-    if (clienteId) {
-      this.userProfileService.getUserProfile(clienteId).subscribe({
-        next: (cliente) => {
-          this.cliente = cliente;
-        }
-      })
-
-      this.metaService.getMetasByClienteId(clienteId).subscribe({
-        next: (metas) => {
-          this.meta = metas;
-          this.filteredMeta = metas;
-          
-          // Deshabilita el botón si ya hay metas
-          this.puedeCrearMeta = this.filteredMeta.length === 0;
-          
-          // Cargar seguimientos para la primera meta
-          if (this.filteredMeta.length > 0) {
-            this.loadSeguimiento(this.filteredMeta[1].id, clienteId);
-          }
-        },
-        error: (error) => {
-          this.showSnackBar('Error al cargar las metas');
-        }
-      });
-      
-    } else {
+    if (!clienteId) {
       this.showSnackBar('Usuario no autenticado');
       this.router.navigate(['/auth/login']);
+      return;
     }
-    
+
+    this.userProfileService.getUserProfile(clienteId).subscribe({
+      next: (cliente) => {
+        this.cliente = cliente;
+      }
+    });
+
+    this.metaService.getMetasByClienteId(clienteId).subscribe({
+      next: (metas) => {
+        console.log('Metas:', metas); // Depuración
+        this.meta = metas;
+        this.filteredMeta = metas;
+        this.puedeCrearMeta = this.filteredMeta.length === 0;
+
+        if (this.filteredMeta.length > 0) {
+          this.loadSeguimiento(this.filteredMeta[0].id, clienteId); // Cambiar al primer elemento
+        }
+      },
+      error: () => {
+        this.showSnackBar('Error al cargar las metas');
+      }
+    });
   }
 
   loadSeguimiento(metaId: number, clienteId: number, pageIndex: number = 0, pageSize: number = 5): void {
     this.seguimientoService.paginateSeguimientosByClienteId(metaId, clienteId, pageIndex, pageSize).subscribe({
       next: (response: PageableResponse<SeguimientoResponse>) => {
-        // Filtra los seguimientos para incluir solo los que pertenecen a la meta actual
+        console.log('Seguimientos:', response.content); // Depuración
         this.seguimiento = response.content;
         this.filteredSeguimiento = response.content;
         this.totalElements = response.totalElements;
         this.pageSize = response.size;
         this.pageIndex = response.number;
-  
+
         this.chartOptions.series = [
           {
-            name: "Peso Diario",
+            name: 'Peso Diario',
             data: this.seguimiento.map((seguimiento) => seguimiento.pesoDelDia)
           }
         ];
         this.chartOptions.xaxis = {
           categories: this.seguimiento.map((seguimiento) => seguimiento.fecha)
-        }
+        };
       },
-      error: (error) => {
+      error: () => {
         this.showSnackBar('Error al cargar los seguimientos');
       }
     });
@@ -189,7 +176,7 @@ export class MetaListComponent implements OnInit {
         this.loadSeguimiento(metaId, this.cliente.id);
         this.showSnackBar('Seguimiento eliminado con éxito');
       },
-      error: (error) => {
+      error: () => {
         this.showSnackBar('Error al eliminar el seguimiento');
       }
     });
@@ -200,11 +187,9 @@ export class MetaListComponent implements OnInit {
       next: () => {
         this.loadMeta();
         this.showSnackBar('Meta eliminada con éxito');
-
-        // Permite crear meta nuevamente si no hay metas después de eliminar
         this.puedeCrearMeta = this.filteredMeta.length === 0;
       },
-      error: (error) => {
+      error: () => {
         this.showSnackBar('Error al eliminar la meta');
       }
     });
@@ -213,13 +198,13 @@ export class MetaListComponent implements OnInit {
   onPageChange(event: PageEvent): void {
     this.pageIndex = event.pageIndex;
     this.pageSize = event.pageSize;
-    const metaId = this.filteredMeta.length > 0 ? this.filteredMeta[0].id : 0;
-    this.loadSeguimiento(metaId, this.cliente.id, this.pageIndex, this.pageSize);
+    const metaId = this.filteredMeta[0]?.id;
+    if (metaId) {
+      this.loadSeguimiento(metaId, this.cliente.id, this.pageIndex, this.pageSize);
+    }
   }
 
   private showSnackBar(message: string): void {
-    this.snackBar.open(message, 'Cerrar', {
-      duration: 3000,
-    });
+    this.snackBar.open(message, 'Cerrar', { duration: 3000 });
   }
 }

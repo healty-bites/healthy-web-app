@@ -73,15 +73,20 @@ export class UpdateProfileComponent {
     const clienteId = this.authService.getClienteId();
     if (this.profileForm.valid) {
       const updatedData = { ...this.profile, ...this.profileForm.value };
+      console.log('Datos enviados:', updatedData); // Agrega esta línea para depurar los datos enviados
       this.userProfileService.updateUserProfile(clienteId, updatedData).subscribe({
-        next: () => {
+        next: (response) => {
+          console.log('Respuesta del servidor:', response); // Agrega esta línea para depurar la respuesta del servidor
           this.showSnackBar('Perfil actualizado exitosamente.');
           this.router.navigate(['/cliente/perfil']);
         },
         error: (error) => {
+          console.error('Error al actualizar el perfil:', error); // Agrega esta línea para depurar el error
           this.showSnackBar(error.error?.message || 'Error al actualizar el perfil.');
         }
       });
+    } else {
+      this.showSnackBar('Formulario no válido.');
     }
   }
 

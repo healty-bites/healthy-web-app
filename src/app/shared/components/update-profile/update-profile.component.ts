@@ -70,11 +70,10 @@ export class UpdateProfileComponent {
   }
 
   onSubmit(): void {
-    const clienteId = this.authService.getClienteId();
     if (this.profileForm.valid) {
       const updatedData = { ...this.profile, ...this.profileForm.value };
       console.log('Datos enviados:', updatedData); // Agrega esta línea para depurar los datos enviados
-      this.userProfileService.updateUserProfile(clienteId, updatedData).subscribe({
+      this.userProfileService.updateUserProfile(this.profile.id, updatedData).subscribe({
         next: (response) => {
           console.log('Respuesta del servidor:', response); // Agrega esta línea para depurar la respuesta del servidor
           this.showSnackBar('Perfil actualizado exitosamente.');

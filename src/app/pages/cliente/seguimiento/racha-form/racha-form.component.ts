@@ -11,7 +11,6 @@ import { AuthService } from '../../../../core/services/auth.service';
 import { RachaService } from '../../../../core/services/racha.service';
 import { RecompensaResponse } from '../../../../shared/models/recompensa-response.model';
 import { RecompensaService } from '../../../../core/services/recompensa.service';
-import { Racha } from '../../../../shared/models/racha.model';
 
 @Component({
   selector: 'app-racha-form',
@@ -31,7 +30,6 @@ export class RachaFormComponent implements OnInit {
 
   rachaForm!: FormGroup;
   recompensas: RecompensaResponse[] = [];
-  racha: Racha[] = [];
 
   private fb = inject(FormBuilder);
   private rachaService = inject(RachaService);

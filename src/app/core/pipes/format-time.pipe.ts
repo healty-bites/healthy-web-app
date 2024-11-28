@@ -11,12 +11,8 @@ export class FormatTimePipe implements PipeTransform {
         const day = this.padZero(date.getDate());
         const month = this.padZero(date.getMonth() + 1);
         const year = date.getFullYear();
-        const hours = date.getHours();
-        const minutes = this.padZero(date.getMinutes());
-        const ampm = hours >= 12 ? 'pm' : 'am';
-        const formattedHours = hours % 12 || 12;
 
-        return `${day}-${month}-${year} ${formattedHours}:${minutes} ${ampm}`;
+        return `${day}-${month}-${year}`;
     }
 
     private padZero(num: number): string {

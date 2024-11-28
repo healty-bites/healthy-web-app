@@ -12,9 +12,6 @@
               type="text"
               placeholder="Actualice su nombre"
             />
-            @if (controlHasError('nombre', 'required')) {
-            <mat-error>Este campo es obligatorio</mat-error>
-            }
           </mat-form-field>
         </div>
         <div class="col-6">
@@ -26,9 +23,6 @@
               type="text"
               placeholder="Actualice su apellido"
             />
-            @if (controlHasError('apellido', 'required')) {
-            <mat-error>Este campo es obligatorio</mat-error>
-            }
           </mat-form-field>
         </div>
 
@@ -51,9 +45,6 @@
                 type="number"
                 placeholder="Actualice su edad"
               />
-              @if (controlHasError('edad', 'required')) {
-              <mat-error>Este campo es obligatorio</mat-error>
-              }
             </mat-form-field>
           </div>
           <div class="col-4">
@@ -66,9 +57,6 @@
                 step="0.01"
                 placeholder="Actualice su altura"
               />
-              @if (controlHasError('altura', 'required')) {
-              <mat-error>Este campo es obligatorio</mat-error>
-              }
             </mat-form-field>
           </div>
           <div class="col-4">
@@ -81,9 +69,6 @@
                 step="0.01"
                 placeholder="Actualice su peso"
               />
-              @if (controlHasError('peso', 'required')) {
-              <mat-error>Este campo es obligatorio</mat-error>
-              }
             </mat-form-field>
           </div>
         </div>

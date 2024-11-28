@@ -126,7 +126,7 @@ export class MetaListComponent implements OnInit {
           
           // Cargar seguimientos para la primera meta
           if (this.filteredMeta.length > 0) {
-            this.loadSeguimiento(this.filteredMeta[0].id, clienteId);
+            this.loadSeguimiento(this.filteredMeta[1].id, clienteId);
           }
         },
         error: (error) => {

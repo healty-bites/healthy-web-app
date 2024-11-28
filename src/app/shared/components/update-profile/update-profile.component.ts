@@ -70,9 +70,10 @@ export class UpdateProfileComponent {
   }
 
   onSubmit(): void {
+    const clienteId = this.authService.getClienteId();
     if (this.profileForm.valid) {
       const updatedData = { ...this.profile, ...this.profileForm.value };
-      this.userProfileService.updateUserProfile(this.profile.id, updatedData).subscribe({
+      this.userProfileService.updateUserProfile(clienteId, updatedData).subscribe({
         next: () => {
           this.showSnackBar('Perfil actualizado exitosamente.');
           this.router.navigate(['/cliente/perfil']);

@@ -36,7 +36,6 @@ export type ChartOptions = {
   standalone: true,
   imports: [
     CommonModule,
-    GraficoPesoComponent,
     MatTableModule,
     MatFormFieldModule,
     FormatTimePipe,
